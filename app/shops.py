@@ -15,7 +15,7 @@ class Shops:
         return total_cost
 
     def receipt(self, customer: str, product_cart: dict) -> None:
-        time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        time = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
         print(f"\nDate: {time}")
         print(f"Thanks, {customer}, for your purchase!")
         print("You have bought: ")
@@ -23,6 +23,6 @@ class Shops:
         for key, value in product_cart.items():
             cost = value * self.products[key]
             total_cost += cost
-            print(f"{value} {key}s for {cost} dollars")
-        print(f"Total cost is {total_cost} dollars")
+            print(f"{value} {key}s for {cost:.2f} dollars")
+        print(f"Total cost is {total_cost:.2f} dollars")
         print("See you again!\n")

@@ -10,6 +10,7 @@ class Customers:
         self.location = tuple(location)
         self.money = money
         self.car = car
+        self.home_location = self.location
 
     def distance_to_shop(self, shop_location: tuple) -> float:
         x1, y1 = self.location

@@ -22,17 +22,19 @@ def shop_trip() -> None:
                  for custom in config["customers"]]
 
     for cust in customers:
-        print(f"{cust.name} has {cust.money} dollars")
+        print(f"{cust.name} has {cust.money:.2f} dollars")
         trip_cost_dict = {}
         for shop in shops:
             distance = cust.distance_to_shop(shop.location)
-            trip_cost = cust.car.cost_trip(distance, fuel_cost)
-            total_expenses = (
-                shop.products_cost(cust.product_cart) + trip_cost
+            to_shop_cost = cust.car.cost_trip(distance, fuel_cost)
+            return_home_cost = cust.car.cost_trip(distance, fuel_cost)
+            trip_cost = to_shop_cost + return_home_cost
+            total_expenses = round((
+                shop.products_cost(cust.product_cart) + trip_cost), 2
             )
             trip_cost_dict[shop.name] = total_expenses
             print(f"{cust.name}'s trip to the {shop.name} "
-                  f"costs {total_expenses}")
+                  f"costs {total_expenses:.2f}")
 
         cheap_value = min(trip_cost_dict.values())
         cheap_shop_name = ""
@@ -46,10 +48,12 @@ def shop_trip() -> None:
 
         if cheap_value <= cust.money:
             print(f"{cust.name} rides to {cheap_shop.name}")
+            cust.location = cheap_shop.location
             cheap_shop.receipt(cust.name, cust.product_cart)
             print(f"{cust.name} rides home")
             rest = round(cust.money - cheap_value, 2)
-            print(f"{cust.name} now has {rest} dollars\n")
+            print(f"{cust.name} now has {rest:.2f} dollars\n")
+            cust.location = cust.home_location
         else:
             print(f"{cust.name} doesn't have enough money to make a "
                   f"purchase in any shop")
