@@ -23,6 +23,6 @@ class Shops:
         for key, value in product_cart.items():
             cost = value * self.products[key]
             total_cost += cost
-            print(f"{value} {key}s for {cost:.2f} dollars")
-        print(f"Total cost is {total_cost:.2f} dollars")
+            print(f"{value} {key}s for {cost: .2f} dollars")
+        print(f"Total cost is {total_cost: .2f} dollars")
         print("See you again!\n")
