@@ -25,16 +25,18 @@ def shop_trip() -> None:
         print(f"{cust.name} has {cust.money: .2f} dollars")
         trip_cost_dict = {}
         for shop in shops:
-            distance = cust.distance_to_shop(shop.location)
-            to_shop_cost = cust.car.cost_trip(distance, fuel_cost)
-            return_home_cost = cust.car.cost_trip(distance, fuel_cost)
-            trip_cost = to_shop_cost + return_home_cost
-            total_expenses = round((
-                shop.products_cost(cust.product_cart) + trip_cost), 2
-            )
-            trip_cost_dict[shop.name] = total_expenses
-            print(f"{cust.name}'s trip to the {shop.name} "
-                  f"costs {total_expenses: .2f}")
+            if all(product in shop.products for product in cust.product_cart):
+            # Calculate trip cost and add to trip_cost_dict
+                distance = cust.distance_to_shop(shop.location)
+                to_shop_cost = cust.car.cost_trip(distance, fuel_cost)
+                return_home_cost = cust.car.cost_trip(distance, fuel_cost)
+                trip_cost = to_shop_cost + return_home_cost
+                total_expenses = round((
+                    shop.products_cost(cust.product_cart) + trip_cost), 2
+                )
+                trip_cost_dict[shop.name] = total_expenses
+                print(f"{cust.name}'s trip to the {shop.name} "
+                      f"costs {total_expenses: .2f}")
 
         cheap_value = min(trip_cost_dict.values())
         cheap_shop_name = ""
